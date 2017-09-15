@@ -46,6 +46,7 @@ export default class Instagram extends Component {
 
   render () {
     const { clientId, redirectUrl, scopes } = this.props
+
     return (
       <Modal
         animationType={'slide'}
@@ -53,9 +54,9 @@ export default class Instagram extends Component {
         onRequestClose={this.hide.bind(this)}
         transparent
       >
-        <View style={styles.modalWarp}>
+        <View style={[styles.modalWarp,this.props.modalWrapStyles]}>
           <KeyboardAvoidingView behavior='padding' style={styles.keyboardStyle}>
-            <View style={styles.contentWarp}>
+            <View style={[styles.contentWarp,this.props.modalStyles]}>
               <WebView
                 style={[{ flex: 1 }, this.props.styles]}
                 source={{ uri: `https://api.instagram.com/oauth/authorize/?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&scope=${scopes.join('+')}` }}
@@ -80,6 +81,8 @@ const propTypes = {
   clientId: PropTypes.string.isRequired,
   redirectUrl: PropTypes.string,
   styles: PropTypes.object,
+  modalStyles: PropTypes.object,
+  modalWrapStyles: PropTypes.object,
   scopes: PropTypes.array,
   onLoginSuccess: PropTypes.func,
   modalVisible: PropTypes.bool
